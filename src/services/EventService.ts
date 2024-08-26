@@ -7,12 +7,6 @@ const apiClient = axios.create({
   },
 });
 
-async function fetchDataPart(part: string) {
-  return apiClient.get(`https://my-json-server.typicode.com/Jasmxnej/${part}`).then(response => {
-    return response.data || [];
-  });
-}
-
 export default {
   async getAllEvents() {
     const parts = [
@@ -23,7 +17,9 @@ export default {
       'data5/data5',
     ];
 
-    const dataPromises = parts.map(part => fetchDataPart(part));
+    const dataPromises = parts.map(part => 
+      apiClient.get(`https://my-json-server.typicode.com/Jasmxnej/${part}`).then(response => response.data)
+    );
     const results = await Promise.all(dataPromises);
 
     const allEvents = results.flat();
@@ -37,5 +33,14 @@ export default {
       throw new Error(`Event with ID ${id} not found`);
     }
     return event;
+  },
+
+  async getCountryDetails(id: string) {
+    const response = await apiClient.get(`https://my-json-server.typicode.com/matchimaky/dbolympic/country`);
+    const country = response.data.find((country: any) => country.id === id);
+    if (!country) {
+      throw new Error(`Country with ID ${id} not found`);
+    }
+    return country;
   },
 };

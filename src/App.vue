@@ -1,33 +1,29 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import { useMessageStore } from './stores/message';
-import { storeToRefs } from 'pinia';
-import { ref, watch } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
+import { useMessageStore } from './stores/message'
+import { storeToRefs } from 'pinia'
+import { ref, watch } from 'vue'
 
-const store = useMessageStore();
-const { message } = storeToRefs(store);
+const store = useMessageStore()
+const { message } = storeToRefs(store)
 
-const flashMessageVisible = ref(false);
+const flashMessageVisible = ref(false)
 
 watch(message, (newValue) => {
   if (newValue) {
-    flashMessageVisible.value = true;
+    flashMessageVisible.value = true
     setTimeout(() => {
-      flashMessageVisible.value = false;
-      store.resetMessage();
-    }, 3000); // Flash message will disappear after 3 seconds
+      flashMessageVisible.value = false
+      store.resetMessage()
+    }, 3000) // Flash message will disappear after 3 seconds
   }
-});
+})
 </script>
 
 <template>
   <div id="layout">
     <header>
-      <div
-        id="flashMessage"
-        v-if="flashMessageVisible"
-        class="flash-message"
-      >
+      <div id="flashMessage" v-if="flashMessageVisible" class="flash-message">
         <h4>{{ message }}</h4>
       </div>
       <div class="wrapper">
@@ -90,7 +86,7 @@ h2 {
 
 .flash-message {
   background-color: #f0ad4e;
-  color: #fff;
+  color: black;
   padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
