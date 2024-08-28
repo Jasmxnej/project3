@@ -1,26 +1,41 @@
-export interface Airline {
-  _id: string;
+export interface MedalDetails {
+  gold: number;
+  silver: number;
+  bronze: number;
+}
+
+export interface SportMedalDetails {
   name: string;
-  country: string;
-  logo: string;
-  slogan: string;
-  head_quaters: string;
-  website: string;
-  established: string;
+  gold: number;
+  silver: number;
+  bronze: number;
 }
 
 export interface Event {
-  _id: string;
-  name: string; 
-  trips: number;
-  airline: Airline[];
+  id: string;
+  name: string;
+  continent: string;
+  flag_url: string;
+  description: string;
+  total_medals: number;
+  medals_by_sport: {
+    until_2024: {
+      sports: SportMedalDetails[];
+      total: MedalDetails;
+    };
+    in_2024: {
+      sports: SportMedalDetails[];
+      total: MedalDetails;
+    };
+  };
 }
 
-export interface MessageState{
-  message: string
+export interface Comment {
+  name: string;
+  text: string;
+  date: string;
 }
 
-export interface EventState {
-  event: Event | null
+export interface MessageState {
+  message: string;
 }
-
